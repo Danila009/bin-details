@@ -103,28 +103,41 @@ fun MainScreen(
 
                             Spacer(modifier = Modifier.height(5.dp))
 
-                            Text(
-                                text = "Scheme: ${binDetails!!.scheme}",
-                                modifier = Modifier.padding(2.dp)
-                            )
-                            Text(
-                                text = "Type: ${binDetails!!.type}",
-                                modifier = Modifier.padding(2.dp)
-                            )
-                            Text(
-                                text = "Brand: ${binDetails!!.brand}",
-                                modifier = Modifier.padding(2.dp)
-                            )
+                            binDetails!!.scheme?.let { scheme ->
+                                Text(
+                                    text = "Scheme: $scheme",
+                                    modifier = Modifier.padding(2.dp)
+                                )
+                            }
+
+                            binDetails!!.type?.let { type ->
+                                Text(
+                                    text = "Type: $type",
+                                    modifier = Modifier.padding(2.dp)
+                                )
+                            }
+
+                            binDetails!!.brand?.let { brand ->
+                                Text(
+                                    text = "Brand: $brand",
+                                    modifier = Modifier.padding(2.dp)
+                                )
+                            }
 
                             Divider()
 
                             Spacer(modifier = Modifier.height(10.dp))
 
-                            Text(
-                                text = "Country",
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.W900
-                            )
+                            if(
+                                binDetails!!.country?.name != null ||
+                                binDetails!!.country?.emoji != null
+                            ){
+                                Text(
+                                    text = "Country",
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.W900
+                                )
+                            }
 
                             TextButton(
                                 onClick = {
@@ -138,7 +151,8 @@ fun MainScreen(
                                 }
                             ) {
                                 Text(
-                                    text = "${binDetails!!.country?.name} ${binDetails!!.country?.emoji}",
+                                    text = "${(binDetails!!.country?.name) ?: ""} " +
+                                            ((binDetails!!.country?.emoji) ?: ""),
                                     modifier = Modifier.padding(2.dp)
                                 )
                             }
@@ -147,16 +161,24 @@ fun MainScreen(
 
                             Spacer(modifier = Modifier.height(10.dp))
 
-                            Text(
-                                text = "Bank",
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.W900
-                            )
+                            if(
+                                binDetails!!.bank?.name != null ||
+                                binDetails!!.bank?.phone != null ||
+                                binDetails!!.bank?.url != null
+                            ){
+                                Text(
+                                    text = "Bank",
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.W900
+                                )
+                            }
 
-                            Text(
-                                text = binDetails!!.bank?.name.toString(),
-                                modifier = Modifier.padding(2.dp)
-                            )
+                            binDetails!!.bank?.name?.let { name ->
+                                Text(
+                                    text = name,
+                                    modifier = Modifier.padding(2.dp)
+                                )
+                            }
 
                             binDetails!!.bank?.phone?.let { phone ->
                                 TextButton(onClick = { context.openPhone(phone) }) {
